@@ -5,7 +5,7 @@
 
 # If false, merge configs from `_data/next.yml` into default configuration (rewrite).
 # If true, will fully override default configuration by options from `_data/next.yml` (override). Only for NexT settings.
-# And if true, all config from default NexT `_config.yml` have to be copied into `next.yml`. Use if you know what you are doing.
+# And if true, all config from default NexT `_config.yml` must be copied into `next.yml`. Use if you know what you are doing.
 # Useful if you want to comment some options from NexT `_config.yml` by `next.yml` without editing default config.
 override: false
 
@@ -47,9 +47,6 @@ favicon:
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
 
-# Show multilingual switcher in footer.
-language_switcher: false
-
 footer:
   # Specify the date when the site was setup. If not defined, current year will be used.
   #since: 2015
@@ -67,19 +64,28 @@ footer:
   # If not defined, `author` from Hexo `_config.yml` will be used.
   copyright:
 
-  # Powered by Hexo & NexT
-  powered: true
+  powered:
+    # Hexo link (Powered by Hexo).
+    enable: false
+    # Version info of Hexo after Hexo link (vX.X.X).
+    version: false
+
+  theme:
+    # Theme & scheme info link (Theme - NexT.scheme).
+    enable: false
+    # Version info of NexT after scheme info (vX.X.X).
+    version: false
 
   # Beian ICP and gongan information for Chinese users. See: http://www.beian.miit.gov.cn, http://www.beian.gov.cn
   beian:
-    enable: false
-    icp:
+    enable: true
+    icp: 浙ICP备19046519号 # by tangx
     # The digit in the num of gongan beian.
     gongan_id:
     # The full num of gongan beian.
-    gongan_num:
+    gongan_num: 
     # The icon for gongan beian. See: http://www.beian.gov.cn/portal/download
-    gongan_icon_url:
+    gongan_icon_url: https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png
 
 # Creative Commons 4.0 International License.
 # See: https://creativecommons.org/share-your-work/licensing-types-examples
@@ -98,10 +104,10 @@ creative_commons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+#scheme: Muse
 #scheme: Mist
 #scheme: Pisces
-#scheme: Gemini
+scheme: Gemini
 
 # Dark Mode
 darkmode: false
@@ -119,7 +125,7 @@ darkmode: false
 menu:
   home: / || home
   #about: /about/ || user
-  #tags: /tags/ || tags
+  # tags: /tags/ || tags
   #categories: /categories/ || th
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
@@ -455,6 +461,14 @@ font:
 # Disable Baidu transformation on mobile devices.
 disable_baidu_transformation: false
 
+# Set a canonical link tag for your Hexo site.
+# See: https://support.google.com/webmasters/answer/139066
+# Remember to set up your URL in Hexo `_config.yml` (e.g. url: http://yoursite.com)
+canonical: true
+
+# Change headers hierarchy on site-subtitle (will be main site description) and on all post / page titles for better SEO-optimization.
+seo: false
+
 # If true, site-subtitle will be added to index page.
 # Remember to set up your site-subtitle in Hexo `_config.yml` (e.g. subtitle: Subtitle)
 index_with_subtitle: false
@@ -485,7 +499,6 @@ baidu_push: false
 # ---------------------------------------------------------------
 # Third Party Plugins & Services Settings
 # See: https://theme-next.org/docs/third-party-services/
-# More plugins: https://github.com/theme-next/awesome-next
 # You may need to install dependencies or set CDN URLs in `vendors`
 # There are two different CDN providers by default:
 #   - jsDelivr (cdn.jsdelivr.net), works everywhere even in China
@@ -533,7 +546,6 @@ lazyload: false
 pangu: false
 
 # Quicklink Support
-# Do not enable both `pjax` and `quicklink`.
 # For more information: https://github.com/GoogleChromeLabs/quicklink
 # Front-matter (unsupport home archive).
 quicklink:
@@ -691,14 +703,13 @@ cnzz_siteid:
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
   enable: false
-  app_id: # <your app id>
-  app_key: # <your app key>
-  # Required for apps from CN region
-  server_url: # <your server url>
+  app_id: # <app_id>
+  app_key: # <app_key>
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
   # If you don't care about security in leancloud counter and just want to use it directly
   # (without hexo-leancloud-counter-security plugin), set `security` to `false`.
   security: true
+  betterPerformance: false
 
 # Another tool to show number of visitors to each article.
 # Visit https://console.firebase.google.com/u/0/ to get apiKey and projectId.
@@ -712,7 +723,7 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
 busuanzi_count:
-  enable: false
+  enable: true # by tangx
   total_visitors: true
   total_visitors_icon: user
   total_views: true
@@ -801,9 +812,10 @@ tabs:
     tabs: false
     labels: true
 
-# PDF tag
-# NexT will try to load pdf files natively, if failed, pdf.js will be used.
-# So, you have to install the dependency of pdf.js if you want to use pdf tag and make it available to all browsers.
+# PDF tag, requires two plugins: pdfObject and pdf.js
+# pdfObject will try to load pdf files natively, if failed, pdf.js will be used.
+# The following `cdn` setting is only for pdfObject, because cdn for pdf.js might be blocked by CORS policy.
+# So, you must install the dependency of pdf.js if you want to use pdf tag and make it available to all browsers.
 # See: https://github.com/theme-next/theme-next-pdf
 pdf:
   enable: false
@@ -957,9 +969,14 @@ vendors:
   algolia_search:
   instant_search:
 
+  # PDF
+  # pdfobject: //cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js
+  # pdfobject: //cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js
+  pdfobject:
+
   # Mermaid
   # mermaid: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
-  # mermaid: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js
+  # mermaid: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.2/mermaid.min.js
   mermaid:
 
   # Internal version: 1.2.1
